@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">BBVAWifiLogin</string>
+
+    <string name="bbva_logo">BBVA</string>
+    <string name="start_loading">Comprobando estado...</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="mainLoginOK">Acceso correcto!!</string>
+    <string name="mainLoginKO">Acceso erroneo!! Se redirige al login</string>
+
+
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="loginTitle">BBVA</string>
+
+    <string name="loginResultOK">Login correcto!!</string>
+    <string name="loginResultKO">Error de login, comprueba tus datos de acceso!!</string>
+
+    <string name="loginLoadingTitle">Login</string>
+    <string name="loginLoadingText">Probando usuario y clave</string>
+
+</resources>
