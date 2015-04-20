@@ -15,6 +15,9 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import roboguice.activity.RoboActionBarActivity;
@@ -48,35 +51,46 @@ public class LoginActivity extends RoboActionBarActivity {
     }
 
     public void login(View view) {
-        //login service
         final String user = userEditText.getText().toString();
         final String pass = passEditText.getText().toString();
         loginResult.setVisibility(View.GONE);
-        bbvaWifiConnect.login(user, pass, this, new AsyncHttpResponseHandler() {
+
+        Map parameters = createParameters(user, pass);
+        bbvaWifiConnect.login(parameters, this, createAsyncHttpResponseHandler(user, pass));
+    }
+
+    private Map createParameters(String user, String pass) {
+        Map parameters = new HashMap();
+        parameters.put("user", user);
+        parameters.put("passwd", pass);
+        return parameters;
+    }
+
+    private AsyncHttpResponseHandler createAsyncHttpResponseHandler(final String user, final String pass) {
+        return new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 //check body
                 String body = new String(responseBody);
                 int pos = body.indexOf("Inicio - MediaNet Software");
-                if(pos != -1) {
-                    //ok
+                if (pos != -1) {
                     dataStore.saveAccess(user, pass);
-                    loginResult.setText(R.string.loginResultOK);
-                    loginResult.setVisibility(View.VISIBLE);
+                    showResultMessage(R.string.loginResultOK);
                 } else {
-                    //error
-                    loginResult.setText(R.string.loginResultKO);
-                    loginResult.setVisibility(View.VISIBLE);
+                    showResultMessage(R.string.loginResultKO);
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                //error
-                loginResult.setText(R.string.loginResultKO);
-                loginResult.setVisibility(View.VISIBLE);
+                showResultMessage(R.string.loginResultKO);
             }
-        });
+        };
+    }
+
+    private void showResultMessage(int message) {
+        loginResult.setText(message);
+        loginResult.setVisibility(View.VISIBLE);
     }
 
 }

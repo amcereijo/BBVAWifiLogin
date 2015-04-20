@@ -18,7 +18,6 @@ public class DataStore {
     private final static String PASS = "bbva_pass";
 
     private SharedPreferences sharedPref;
-
     private Context context;
 
     @Inject

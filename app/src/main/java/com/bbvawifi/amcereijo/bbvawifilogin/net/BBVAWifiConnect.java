@@ -10,6 +10,8 @@ import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 
+import java.util.Map;
+
 import javax.inject.Singleton;
 
 /**
@@ -18,21 +20,19 @@ import javax.inject.Singleton;
 @Singleton
 public class BBVAWifiConnect {
     private static final String BASE_URL = "https://authwifi3.grupobbva.com:6082/php/uid.php?vsys=1&url=http://www.medianet.es";
+    private static final int TIME_OUT = 5000;
 
     private static AsyncHttpClient client;
-    private RequestParams params;
+
 
     public BBVAWifiConnect() {
         client = new AsyncHttpClient();
-        params = new RequestParams();
-        client.setTimeout(5000);
+        client.setTimeout(TIME_OUT);
     }
 
-    public void login(String user, String pass, Activity parentActivity, final AsyncHttpResponseHandler responseHandler) {
-        params.add("user", user);
-        params.add("passwd", pass);
+    public void login(Map parameters, Activity parentActivity, final AsyncHttpResponseHandler responseHandler) {
+        final RequestParams params = new RequestParams(parameters);
         params.add("ok", "login");
-
         final ProgressDialog progress = ProgressDialog.show(parentActivity,
                 parentActivity.getText(R.string.loginLoadingTitle),
                 parentActivity.getText(R.string.loginLoadingText), true);
@@ -52,4 +52,5 @@ public class BBVAWifiConnect {
         });
 
     }
+
 }
