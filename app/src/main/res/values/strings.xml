@@ -13,10 +13,6 @@
     <string name="login">Login</string>
     <string name="loginTitle">BBVA</string>
 
-    <string name="loginResultOK">Login correcto!!</string>
-    <string name="loginResultKO">Error de login, comprueba tus datos de acceso!!</string>
-
-    <string name="loginLoadingTitle">Login</string>
     <string name="loginLoadingText">Probando usuario y clave</string>
 
 </resources>
