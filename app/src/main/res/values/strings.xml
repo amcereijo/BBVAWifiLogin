@@ -13,6 +13,6 @@
     <string name="login">Login</string>
     <string name="loginTitle">BBVA</string>
 
-    <string name="loginLoadingText">Probando usuario y clave</string>
+    <string name="loginLoadingText">Probando usuario y clave...</string>
 
 </resources>

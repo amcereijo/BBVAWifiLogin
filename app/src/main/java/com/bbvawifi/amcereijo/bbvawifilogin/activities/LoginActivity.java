@@ -1,5 +1,7 @@
 package com.bbvawifi.amcereijo.bbvawifilogin.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,18 +29,15 @@ import roboguice.inject.InjectView;
 @ContentView(R.layout.activity_login)
 public class LoginActivity extends RoboActionBarActivity {
 
+    public static final int RESULT_CODE = 1024;
+
     @InjectView(R.id.username)
     private EditText userEditText;
     @InjectView(R.id.password)
     private EditText passEditText;
-    @InjectView(R.id.loginResult)
-    private TextView loginResult;
 
     @Inject
     private DataStore dataStore;
-    @Inject
-    private BBVAWifiConnect bbvaWifiConnect;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,44 +52,11 @@ public class LoginActivity extends RoboActionBarActivity {
     public void login(View view) {
         final String user = userEditText.getText().toString();
         final String pass = passEditText.getText().toString();
-        loginResult.setVisibility(View.GONE);
 
-        Map parameters = createParameters(user, pass);
-        bbvaWifiConnect.login(parameters, this, createAsyncHttpResponseHandler(user, pass));
-    }
+        dataStore.saveAccess(user, pass);
 
-    private Map createParameters(String user, String pass) {
-        Map parameters = new HashMap();
-        parameters.put("user", user);
-        parameters.put("passwd", pass);
-        return parameters;
-    }
-
-    private AsyncHttpResponseHandler createAsyncHttpResponseHandler(final String user, final String pass) {
-        return new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                //check body
-                String body = new String(responseBody);
-                int pos = body.indexOf("Inicio - MediaNet Software");
-                if (pos != -1) {
-                    dataStore.saveAccess(user, pass);
-                    showResultMessage(R.string.loginResultOK);
-                } else {
-                    showResultMessage(R.string.loginResultKO);
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                showResultMessage(R.string.loginResultKO);
-            }
-        };
-    }
-
-    private void showResultMessage(int message) {
-        loginResult.setText(message);
-        loginResult.setVisibility(View.VISIBLE);
+        setResult(RESULT_CODE);
+        finish();
     }
 
 }

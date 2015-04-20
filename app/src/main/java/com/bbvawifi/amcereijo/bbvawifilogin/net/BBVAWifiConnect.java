@@ -33,20 +33,14 @@ public class BBVAWifiConnect {
     public void login(Map parameters, Activity parentActivity, final AsyncHttpResponseHandler responseHandler) {
         final RequestParams params = new RequestParams(parameters);
         params.add("ok", "login");
-        final ProgressDialog progress = ProgressDialog.show(parentActivity,
-                parentActivity.getText(R.string.loginLoadingTitle),
-                parentActivity.getText(R.string.loginLoadingText), true);
-
         client.post(BASE_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                progress.dismiss();
                 responseHandler.onSuccess(statusCode,headers, responseBody);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                progress.dismiss();
                 responseHandler.onFailure(statusCode, headers, responseBody, error);
             }
         });

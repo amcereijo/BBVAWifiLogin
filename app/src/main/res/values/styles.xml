@@ -5,4 +5,7 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <item name="bbvaColor" type="color">#2E64FE</item>
+    <item name="layoutColor" type="color">#E0F2F7</item>
+
 </resources>
