@@ -3,6 +3,7 @@ package com.bbvawifi.amcereijo.bbvawifilogin;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class MainActivity extends RoboActionBarActivity {
     private BBVAWifiConnect bbvaWifiConnect;
     @InjectView(R.id.status_message)
     private TextView statusMessage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class MainActivity extends RoboActionBarActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.e("BBVAWifi_Login", new String(responseBody), error);
                 showResultMessage(R.string.mainLoginKO);
                 startLoginActivity();
             }
